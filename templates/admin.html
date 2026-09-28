@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MANFRANP | Painel Administrativo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button,
+        select,
+        input,
+        textarea {
+            font-family: inherit;
+        }
+
+        .topo {
+            background: #111827;
+            border-bottom: 1px solid #263244;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .marca {
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .marca span {
+            color: #3b82f6;
+        }
+
+        .menu-topo {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .botao-topo {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: #1e293b;
+            color: white;
+            font-size: 14px;
+            border: 1px solid #334155;
+        }
+
+        .botao-topo:hover {
+            background: #2563eb;
+        }
+
+        .container {
+            width: min(1400px, 94%);
+            margin: 30px auto 60px;
+        }
+
+        .titulo-principal {
+            margin-bottom: 25px;
+        }
+
+        .titulo-principal h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .titulo-principal p {
+            margin: 0;
+            color: #94a3b8;
+        }
+
+        .estado-admin {
+            margin-top: 18px;
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.35);
+            color: #86efac;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .card-numero {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .card-texto {
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .notificacao {
+            border: 1px solid #334155;
+        }
+
+        .notificacao.alerta {
+            border-color: #f59e0b;
+        }
+
+        .notificacao-ok {
+            color: #86efac;
+            font-weight: bold;
+        }
+
+        .notificacao-alerta {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .status-card {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .status-numero {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .status-texto {
+            margin-top: 7px;
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .secao {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .secao-cabecalho {
+            padding: 20px;
+            border-bottom: 1px solid #263244;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .secao-cabecalho h2 {
+            margin: 0;
+            color: white;
+            font-size: 20px;
+        }
+
+        .pesquisa {
+            width: 280px;
+            max-width: 100%;
+            padding: 11px 13px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            outline: none;
+        }
+
+        .pesquisa:focus {
+            border-color: #3b82f6;
+        }
+
+        .tabela-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th,
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #263244;
+            text-align: left;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        th {
+            background: #172033;
+            color: #cbd5e1;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: #cbd5e1;
+        }
+
+        tr:hover td {
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        tr.nao-lido td {
+            background: rgba(37, 99, 235, 0.08);
+        }
+
+        .nome-forte {
+            color: white;
+            font-weight: bold;
+        }
+
+        .descricao {
+            max-width: 300px;
+            line-height: 1.5;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .botao {
+            border: 0;
+            border-radius: 7px;
+            padding: 8px 11px;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .botao:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+
+        .botao-ver {
+            background: #2563eb;
+        }
+
+        .botao-orcamento {
+            background: #7c3aed;
+        }
+
+        .botao-pdf {
+            background: #7c3aed;
+        }
+
+        .botao-apagar {
+            background: #dc2626;
+        }
+
+        .botao-copiar {
+            background: #0f766e;
+        }
+
+        .botao-fechar {
+            background: #475569;
+        }
+
+        .botao-criar {
+            background: #16a34a;
+        }
+
+        .estado {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .estado-novo {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+        }
+
+        .estado-analise {
+            background: rgba(234, 179, 8, 0.15);
+            color: #fde047;
+        }
+
+        .estado-andamento {
+            background: rgba(168, 85, 247, 0.15);
+            color: #d8b4fe;
+        }
+
+        .estado-concluido {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86efac;
+        }
+
+        .estado-orcamento {
+            background: rgba(124, 58, 237, 0.15);
+            color: #c4b5fd;
+        }
+
+        .estado-recusado {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .form-estado {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .select {
+            background: #0f172a;
+            color: white;
+            border: 1px solid #334155;
+            padding: 8px;
+            border-radius: 7px;
+            outline: none;
+        }
+
+        .botao-atualizar {
+            background: #334155;
+        }
+
+        .vazio {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .modal.aberto {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .modal-caixa {
+            width: min(650px, 100%);
+            margin-top: 50px;
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 15px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .modal-cabecalho {
+            padding: 18px 20px;
+            border-bottom: 1px solid #263244;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-cabecalho h3 {
+            margin: 0;
+            color: white;
+        }
+
+        .fechar-x {
+            border: 0;
+            background: transparent;
+            color: #94a3b8;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .fechar-x:hover {
+            color: white;
+        }
+
+        .modal-corpo {
+            padding: 22px;
+        }
+
+        .campo-info {
+            margin-bottom: 17px;
+        }
+
+        .campo-info strong {
+            display: block;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .campo-info span,
+        .campo-info div {
+            color: white;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .formulario label {
+            display: block;
+            margin-bottom: 7px;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .formulario input,
+        .formulario textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            outline: none;
+            margin-bottom: 16px;
+        }
+
+        .formulario input:focus,
+        .formulario textarea:focus {
+            border-color: #3b82f6;
+        }
+
+        .formulario textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .modal-acoes {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .rodape-modal {
+            padding: 15px 20px;
+            border-top: 1px solid #263244;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .mensagem-vazia {
+            padding: 25px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        @media (max-width: 1000px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .topo {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 20px;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .titulo-principal h1 {
+                font-size: 25px;
+            }
+
+            .secao-cabecalho {
+                align-items: stretch;
+            }
+
+            .pesquisa {
+                width: 100%;
+            }
+
+            .modal {
+                padding: 10px;
+            }
+
+            .modal-caixa {
+                margin-top: 15px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="topo">
+
+    <div class="marca">
+        MANFRANP <span>| Painel Administrativo</span>
+    </div>
+
+    <div class="menu-topo">
+        <a href="/" class="botao-topo">🌐 Ver site</a>
+        <a href="/admin" class="botao-topo">🔄 Atualizar</a>
+        <a href="/logout" class="botao-topo">🚪 Sair</a>
+    </div>
+
+</header>
+
+
+<main class="container">
+
+    <div class="titulo-principal">
+
+        <h1>Visão Geral</h1>
+
+        <p>
+            Administração dos contactos, pedidos e orçamentos da MANFRANP.
+        </p>
+
+        <div class="estado-admin">
+            🟢 Administrador conectado
+        </div>
+
+    </div>
+
+
+    <!-- CARDS PRINCIPAIS -->
+
+    <section class="cards">
+
+        <div class="card">
+            <div class="card-icon">📩</div>
+            <div class="card-numero">{{ total_contactos }}</div>
+            <div class="card-texto">CONTACTOS RECEBIDOS</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📋</div>
+            <div class="card-numero">{{ total_pedidos }}</div>
+            <div class="card-texto">PEDIDOS DE PROJETOS</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <div class="card-numero">{{ total_atividade }}</div>
+            <div class="card-texto">ATIVIDADE TOTAL</div>
+        </div>
+
+    </section>
+
+
+    <!-- NOTIFICAÇÕES -->
+
+    <section class="cards">
+
+        <div class="card notificacao {% if total_notificacoes > 0 %}alerta{% endif %}">
+
+            <div class="card-icon">🔔</div>
+
+            <div class="card-numero">
+                {{ total_notificacoes }}
+            </div>
+
+            <div class="card-texto">
+                NOTIFICAÇÕES
+            </div>
+
+            <br>
+
+            {% if total_notificacoes > 0 %}
+
+                <div class="notificacao-alerta">
+                    Atenção necessária
+                </div>
+
+                <p>
+                    {{ pedidos_nao_lidos }} pedido(s) novo(s) e
+                    {{ contactos_nao_lidos }} contacto(s) novo(s).
+                </p>
+
+            {% else %}
+
+                <div class="notificacao-ok">
+                    Tudo em dia
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">🆕</div>
+
+            <div class="card-numero">
+                {{ total_novos }}
+            </div>
+
+            <div class="card-texto">
+                NOVOS PEDIDOS
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">💰</div>
+
+            <div class="card-numero">
+                {{ total_orcamentos }}
+            </div>
+
+            <div class="card-texto">
+                ORÇAMENTOS
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ESTADOS -->
+
+    <section class="status-grid">
+
+        <div class="status-card">
+            <div class="status-numero">{{ total_novos }}</div>
+            <div class="status-texto">🆕 NOVOS PEDIDOS</div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-numero">{{ total_em_analise }}</div>
+            <div class="status-texto">🔎 EM ANÁLISE</div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-numero">{{ total_em_andamento }}</div>
+            <div class="status-texto">⚙️ EM ANDAMENTO</div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-numero">{{ total_concluidos }}</div>
+            <div class="status-texto">✅ CONCLUÍDOS</div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-numero">{{ total_orcamentos }}</div>
+            <div class="status-texto">💰 ORÇAMENTOS</div>
+        </div>
+
+    </section>
+
+
+    <p style="color:#94a3b8; margin-bottom:25px;">
+        Há atividade registada no sistema.
+        Existem {{ total_contactos }} contacto(s) e
+        {{ total_pedidos }} pedido(s) armazenados.
+    </p>
+
+
+    <!-- CONTACTOS -->
+
+    <section class="secao">
+
+        <div class="secao-cabecalho">
+
+            <h2>📩 Contactos Recebidos</h2>
+
+            <input
+                type="text"
+                class="pesquisa"
+                placeholder="Pesquisar contacto..."
+                onkeyup="pesquisarTabela(this, 'tabelaContactos')"
+            >
+
+        </div>
+
+
+        <div class="tabela-container">
+
+            <table id="tabelaContactos">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Mensagem</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for contacto in contactos %}
+
+                    <tr
+                        {% if contacto[5] == 0 %}
+                            class="nao-lido"
+                        {% endif %}
+                    >
+
+                        <td>{{ contacto[0] }}</td>
+
+                        <td class="nome-forte">
+                            {{ contacto[1] }}
+                        </td>
+
+                        <td>
+                            {{ contacto[2] }}
+                        </td>
+
+                        <td class="descricao">
+                            {{ contacto[3] }}
+                        </td>
+
+                        <td>
+                            {{ contacto[4] }}
+                        </td>
+
+                        <td>
+
+                            <div class="acoes">
+
+                                <button
+                                    type="button"
+                                    class="botao botao-ver"
+                                    onclick="verContacto(
+                                        {{ contacto[0] }},
+                                        {{ contacto[1]|tojson }},
+                                        {{ contacto[2]|tojson }},
+                                        {{ contacto[3]|tojson }},
+                                        {{ contacto[4]|tojson }},
+                                        {{ contacto[5] }}
+                                    )"
+                                >
+                                    👁️ Ver
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="botao botao-apagar"
+                                    onclick="confirmarApagarContacto({{ contacto[0] }})"
+                                >
+                                    🗑️ Apagar
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="6" class="vazio">
+                            Nenhum contacto recebido.
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- PEDIDOS -->
+
+    <section class="secao">
+
+        <div class="secao-cabecalho">
+
+            <h2>📋 Pedidos de Projetos</h2>
+
+            <input
+                type="text"
+                class="pesquisa"
+                placeholder="Pesquisar pedido..."
+                onkeyup="pesquisarTabela(this, 'tabelaPedidos')"
+            >
+
+        </div>
+
+
+        <div class="tabela-container">
+
+            <table id="tabelaPedidos">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Email</th>
+                        <th>Projeto</th>
+                        <th>Descrição</th>
+                        <th>Estado</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for pedido in pedidos %}
+
+                    {% set estado = estados_pedidos.get(pedido[0], 'Novo') %}
+
+                    <tr
+                        {% if pedido[7] == 0 %}
+                            class="nao-lido"
+                        {% endif %}
+                    >
+
+                        <td>{{ pedido[0] }}</td>
+
+                        <td class="nome-forte">
+                            {{ pedido[1] }}
+                        </td>
+
+                        <td>
+                            {{ pedido[2] }}
+                        </td>
+
+                        <td>
+                            {{ pedido[3] }}
+                        </td>
+
+                        <td class="descricao">
+                            {{ pedido[4] }}
+                        </td>
+
+                        <td>
+
+                            {% if estado == 'Novo' %}
+
+                                <span class="estado estado-novo">
+                                    🆕 Novo
+                                </span>
+
+                            {% elif estado == 'Em análise' %}
+
+                                <span class="estado estado-analise">
+                                    🔎 Em análise
+                                </span>
+
+                            {% elif estado == 'Em andamento' %}
+
+                                <span class="estado estado-andamento">
+                                    ⚙️ Em andamento
+                                </span>
+
+                            {% elif estado == 'Concluído' %}
+
+                                <span class="estado estado-concluido">
+                                    ✅ Concluído
+                                </span>
+
+                            {% endif %}
+
+                            <br><br>
+
+                            <form
+                                method="POST"
+                                action="/admin/pedido/estado/{{ pedido[0] }}"
+                                class="form-estado"
+                            >
+
+                                <select
+                                    name="estado"
+                                    class="select"
+                                >
+
+                                    <option
+                                        value="Novo"
+                                        {% if estado == 'Novo' %}selected{% endif %}
+                                    >
+                                        Novo
+                                    </option>
+
+                                    <option
+                                        value="Em análise"
+                                        {% if estado == 'Em análise' %}selected{% endif %}
+                                    >
+                                        Em análise
+                                    </option>
+
+                                    <option
+                                        value="Em andamento"
+                                        {% if estado == 'Em andamento' %}selected{% endif %}
+                                    >
+                                        Em andamento
+                                    </option>
+
+                                    <option
+                                        value="Concluído"
+                                        {% if estado == 'Concluído' %}selected{% endif %}
+                                    >
+                                        Concluído
+                                    </option>
+
+                                </select>
+
+                                <button
+                                    type="submit"
+                                    class="botao botao-atualizar"
+                                >
+                                    Atualizar
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                        <td>
+                            {{ pedido[5] }}
+                        </td>
+
+                        <td>
+
+                            <div class="acoes">
+
+                                <button
+                                    type="button"
+                                    class="botao botao-ver"
+                                    onclick="verPedido(
+                                        {{ pedido[0] }},
+                                        {{ pedido[1]|tojson }},
+                                        {{ pedido[2]|tojson }},
+                                        {{ pedido[3]|tojson }},
+                                        {{ pedido[4]|tojson }},
+                                        {{ pedido[5]|tojson }},
+                                        {{ estado|tojson }},
+                                        {{ pedido[7] }}
+                                    )"
+                                >
+                                    👁️ Ver
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="botao botao-orcamento"
+                                    onclick="abrirOrcamento(
+                                        {{ pedido[0] }},
+                                        {{ pedido[1]|tojson }},
+                                        {{ pedido[2]|tojson }},
+                                        {{ pedido[3]|tojson }},
+                                        {{ pedido[4]|tojson }}
+                                    )"
+                                >
+                                    💰 Orçamento
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="botao botao-apagar"
+                                    onclick="confirmarApagarPedido({{ pedido[0] }})"
+                                >
+                                    🗑️ Apagar
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="8" class="vazio">
+                            Nenhum pedido registado.
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ORÇAMENTOS -->
+
+    <section class="secao">
+
+        <div class="secao-cabecalho">
+
+            <h2>💰 Orçamentos</h2>
+
+            <input
+                type="text"
+                class="pesquisa"
+                placeholder="Pesquisar orçamento..."
+                onkeyup="pesquisarTabela(this, 'tabelaOrcamentos')"
+            >
+
+        </div>
+
+
+        <div class="tabela-container">
+
+            <table id="tabelaOrcamentos">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Projeto</th>
+                        <th>Valor</th>
+                        <th>Prazo</th>
+                        <th>Estado</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for orcamento in orcamentos %}
+
+                    <tr>
+
+                        <td>
+                            {{ orcamento[0] }}
+                        </td>
+
+                        <td class="nome-forte">
+                            {{ orcamento[2] }}
+                        </td>
+
+                        <td>
+                            {{ orcamento[4] }}
+                        </td>
+
+                        <td>
+                            {{ "%.2f"|format(orcamento[6]) }} Kz
+                        </td>
+
+                        <td>
+                            {{ orcamento[7] }}
+                        </td>
+
+                        <td>
+
+                            {% if orcamento[9] == 'Rascunho' %}
+
+                                <span class="estado estado-orcamento">
+                                    📝 Rascunho
+                                </span>
+
+                            {% elif orcamento[9] == 'Enviado' %}
+
+                                <span class="estado estado-analise">
+                                    📤 Enviado
+                                </span>
+
+                            {% elif orcamento[9] == 'Aprovado' %}
+
+                                <span class="estado estado-concluido">
+                                    ✅ Aprovado
+                                </span>
+
+                            {% elif orcamento[9] == 'Recusado' %}
+
+                                <span class="estado estado-recusado">
+                                    ❌ Recusado
+                                </span>
+
+                            {% endif %}
+
+                            <br><br>
+
+                            <form
+                                method="POST"
+                                action="/admin/orcamento/estado/{{ orcamento[0] }}"
+                            >
+
+                                <select
+                                    name="estado"
+                                    class="select"
+                                    onchange="this.form.submit()"
+                                >
+
+                                    <option
+                                        value="Rascunho"
+                                        {% if orcamento[9] == 'Rascunho' %}selected{% endif %}
+                                    >
+                                        Rascunho
+                                    </option>
+
+                                    <option
+                                        value="Enviado"
+                                        {% if orcamento[9] == 'Enviado' %}selected{% endif %}
+                                    >
+                                        Enviado
+                                    </option>
+
+                                    <option
+                                        value="Aprovado"
+                                        {% if orcamento[9] == 'Aprovado' %}selected{% endif %}
+                                    >
+                                        Aprovado
+                                    </option>
+
+                                    <option
+                                        value="Recusado"
+                                        {% if orcamento[9] == 'Recusado' %}selected{% endif %}
+                                    >
+                                        Recusado
+                                    </option>
+
+                                </select>
+
+                            </form>
+
+                        </td>
+
+                        <td>
+                            {{ orcamento[10] }}
+                        </td>
+
+                        <td>
+
+                            <div class="acoes">
+
+                                <button
+                                    type="button"
+                                    class="botao botao-ver"
+                                    onclick="verOrcamento(
+                                        {{ orcamento[0] }},
+                                        {{ orcamento[1] }},
+                                        {{ orcamento[2]|tojson }},
+                                        {{ orcamento[3]|tojson }},
+                                        {{ orcamento[4]|tojson }},
+                                        {{ orcamento[5]|tojson }},
+                                        {{ orcamento[6] }},
+                                        {{ orcamento[7]|tojson }},
+                                        {{ orcamento[8]|tojson }},
+                                        {{ orcamento[9]|tojson }},
+                                        {{ orcamento[10]|tojson }}
+                                    )"
+                                >
+                                    👁️ Ver
+                                </button>
+
+
+                                <!-- NOVO BOTÃO PDF -->
+
+                                <a
+                                    href="/admin/orcamento/pdf/{{ orcamento[0] }}"
+                                    class="botao botao-pdf"
+                                    target="_blank"
+                                >
+                                    📄 PDF
+                                </a>
+
+
+                                <button
+                                    type="button"
+                                    class="botao botao-apagar"
+                                    onclick="confirmarApagarOrcamento({{ orcamento[0] }})"
+                                >
+                                    🗑️ Apagar
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="8" class="vazio">
+                            Nenhum orçamento criado ainda.
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+    id="modal"
+    class="modal"
+    onclick="fecharModalFora(event)"
+>
+
+    <div
+        class="modal-caixa"
+        onclick="event.stopPropagation()"
+    >
+
+        <div class="modal-cabecalho">
+
+            <h3 id="modalTitulo">
+                MANFRANP
+            </h3>
+
+            <button
+                type="button"
+                class="fechar-x"
+                onclick="fecharModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="modalCorpo"
+            class="modal-corpo"
+        >
+        </div>
+
+
+        <div class="rodape-modal">
+
+            <button
+                type="button"
+                class="botao botao-fechar"
+                onclick="fecharModal()"
+            >
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* ==========================
+       PESQUISA
+    ========================== */
+
+    function pesquisarTabela(input, tabelaId) {
+
+        const texto = input.value.toLowerCase();
+
+        const tabela = document.getElementById(tabelaId);
+
+        if (!tabela) {
+            return;
+        }
+
+        const linhas = tabela.querySelectorAll("tbody tr");
+
+        linhas.forEach(function(linha) {
+
+            const conteudo = linha.textContent.toLowerCase();
+
+            if (conteudo.includes(texto)) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+
+        });
+
+    }
+
+
+    /* ==========================
+       MODAL
+    ========================== */
+
+    function abrirModal(titulo, conteudo) {
+
+        document.getElementById("modalTitulo").textContent = titulo;
+
+        document.getElementById("modalCorpo").innerHTML = conteudo;
+
+        document.getElementById("modal").classList.add("aberto");
+
+    }
+
+
+    function fecharModal() {
+
+        document.getElementById("modal").classList.remove("aberto");
+
+    }
+
+
+    function fecharModalFora(event) {
+
+        if (event.target.id === "modal") {
+            fecharModal();
+        }
+
+    }
+
+
+    document.addEventListener("keydown", function(event) {
+
+        if (event.key === "Escape") {
+            fecharModal();
+        }
+
+    });
+
+
+    /* ==========================
+       ESCAPAR HTML
+    ========================== */
+
+    function escaparHTML(valor) {
+
+        if (valor === null || valor === undefined) {
+            return "";
+        }
+
+        const div = document.createElement("div");
+
+        div.textContent = String(valor);
+
+        return div.innerHTML;
+
+    }
+
+
+    /* ==========================
+       MARCAR CONTACTO COMO LIDO
+    ========================== */
+
+    function marcarContactoLido(id) {
+
+        return fetch("/admin/contacto/lido/" + id, {
+            method: "POST"
+        })
+        .then(function() {
+            return true;
+        })
+        .catch(function() {
+            return false;
+        });
+
+    }
+
+
+    /* ==========================
+       MARCAR PEDIDO COMO LIDO
+    ========================== */
+
+    function marcarPedidoLido(id) {
+
+        return fetch("/admin/pedido/lido/" + id, {
+            method: "POST"
+        })
+        .then(function() {
+            return true;
+        })
+        .catch(function() {
+            return false;
+        });
+
+    }
+
+
+    /* ==========================
+       VER CONTACTO
+    ========================== */
+
+    function verContacto(
+        id,
+        nome,
+        email,
+        mensagem,
+        data,
+        lido
+    ) {
+
+        if (!lido || Number(lido) === 0) {
+
+            marcarContactoLido(id).then(function() {
+
+                setTimeout(function() {
+                    location.reload();
+                }, 200);
+
+            });
+
+        }
+
+
+        const html = `
+
+            <div class="campo-info">
+
+                <strong>ID</strong>
+
+                <span>
+                    ${escaparHTML(id)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Nome</strong>
+
+                <span>
+                    ${escaparHTML(nome)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Email</strong>
+
+                <span>
+                    ${escaparHTML(email)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Data</strong>
+
+                <span>
+                    ${escaparHTML(data)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Mensagem</strong>
+
+                <div>
+                    ${escaparHTML(mensagem).replace(/\n/g, "<br>")}
+                </div>
+
+            </div>
+
+
+            <div class="modal-acoes">
+
+                <button
+                    type="button"
+                    class="botao botao-copiar"
+                    onclick="copiarEmail(${JSON.stringify(email)})"
+                >
+                    📋 Copiar email
+                </button>
+
+            </div>
+
+        `;
+
+
+        abrirModal(
+            "📩 Detalhes do Contacto",
+            html
+        );
+
+    }
+
+
+    /* ==========================
+       VER PEDIDO
+    ========================== */
+
+    function verPedido(
+        id,
+        nome,
+        email,
+        projeto,
+        descricao,
+        data,
+        estado,
+        lido
+    ) {
+
+        if (!lido || Number(lido) === 0) {
+
+            marcarPedidoLido(id).then(function() {
+
+                setTimeout(function() {
+                    location.reload();
+                }, 200);
+
+            });
+
+        }
+
+
+        const html = `
+
+            <div class="campo-info">
+
+                <strong>ID</strong>
+
+                <span>
+                    ${escaparHTML(id)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Cliente</strong>
+
+                <span>
+                    ${escaparHTML(nome)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Email</strong>
+
+                <span>
+                    ${escaparHTML(email)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Projeto</strong>
+
+                <span>
+                    ${escaparHTML(projeto)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Estado</strong>
+
+                <span>
+                    ${escaparHTML(estado)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Data</strong>
+
+                <span>
+                    ${escaparHTML(data)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Descrição</strong>
+
+                <div>
+                    ${escaparHTML(descricao).replace(/\n/g, "<br>")}
+                </div>
+
+            </div>
+
+
+            <div class="modal-acoes">
+
+                <button
+                    type="button"
+                    class="botao botao-copiar"
+                    onclick="copiarEmail(${JSON.stringify(email)})"
+                >
+                    📋 Copiar email
+                </button>
+
+                <button
+                    type="button"
+                    class="botao botao-orcamento"
+                    onclick="abrirOrcamento(
+                        ${Number(id)},
+                        ${JSON.stringify(nome)},
+                        ${JSON.stringify(email)},
+                        ${JSON.stringify(projeto)},
+                        ${JSON.stringify(descricao)}
+                    )"
+                >
+                    💰 Criar orçamento
+                </button>
+
+            </div>
+
+        `;
+
+
+        abrirModal(
+            "📋 Detalhes do Pedido",
+            html
+        );
+
+    }
+
+
+    /* ==========================
+       CRIAR ORÇAMENTO
+    ========================== */
+
+    function abrirOrcamento(
+        id,
+        nome,
+        email,
+        projeto,
+        descricao
+    ) {
+
+        const html = `
+
+            <form
+                method="POST"
+                action="/admin/orcamento/criar/${Number(id)}"
+                class="formulario"
+            >
+
+                <div class="campo-info">
+
+                    <strong>Cliente</strong>
+
+                    <span>
+                        ${escaparHTML(nome)}
+                    </span>
+
+                </div>
+
+
+                <div class="campo-info">
+
+                    <strong>Email</strong>
+
+                    <span>
+                        ${escaparHTML(email)}
+                    </span>
+
+                </div>
+
+
+                <div class="campo-info">
+
+                    <strong>Projeto</strong>
+
+                    <span>
+                        ${escaparHTML(projeto)}
+                    </span>
+
+                </div>
+
+
+                <div class="campo-info">
+
+                    <strong>Descrição</strong>
+
+                    <div>
+                        ${escaparHTML(descricao).replace(/\n/g, "<br>")}
+                    </div>
+
+                </div>
+
+
+                <label for="valorOrcamento">
+                    Valor do orçamento
+                </label>
+
+                <input
+                    id="valorOrcamento"
+                    type="text"
+                    name="valor"
+                    placeholder="Ex.: 150000"
+                    required
+                >
+
+
+                <label for="prazoOrcamento">
+                    Prazo
+                </label>
+
+                <input
+                    id="prazoOrcamento"
+                    type="text"
+                    name="prazo"
+                    placeholder="Ex.: 15 dias"
+                    required
+                >
+
+
+                <label for="observacoesOrcamento">
+                    Observações
+                </label>
+
+                <textarea
+                    id="observacoesOrcamento"
+                    name="observacoes"
+                    placeholder="Informações adicionais sobre o orçamento..."
+                ></textarea>
+
+
+                <div class="modal-acoes">
+
+                    <button
+                        type="button"
+                        class="botao botao-fechar"
+                        onclick="fecharModal()"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="botao botao-criar"
+                    >
+                        💰 Criar orçamento
+                    </button>
+
+                </div>
+
+            </form>
+
+        `;
+
+
+        abrirModal(
+            "💰 Criar Orçamento",
+            html
+        );
+
+    }
+
+
+    /* ==========================
+       VER ORÇAMENTO
+    ========================== */
+
+    function verOrcamento(
+        id,
+        pedidoId,
+        cliente,
+        email,
+        projeto,
+        descricao,
+        valor,
+        prazo,
+        observacoes,
+        estado,
+        data
+    ) {
+
+        const html = `
+
+            <div class="campo-info">
+
+                <strong>ID do orçamento</strong>
+
+                <span>
+                    ${escaparHTML(id)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>ID do pedido</strong>
+
+                <span>
+                    ${escaparHTML(pedidoId)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Cliente</strong>
+
+                <span>
+                    ${escaparHTML(cliente)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Email</strong>
+
+                <span>
+                    ${escaparHTML(email)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Projeto</strong>
+
+                <span>
+                    ${escaparHTML(projeto)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Valor</strong>
+
+                <span>
+                    ${escaparHTML(Number(valor).toFixed(2))} Kz
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Prazo</strong>
+
+                <span>
+                    ${escaparHTML(prazo)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Estado</strong>
+
+                <span>
+                    ${escaparHTML(estado)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Data</strong>
+
+                <span>
+                    ${escaparHTML(data)}
+                </span>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Descrição</strong>
+
+                <div>
+                    ${escaparHTML(descricao).replace(/\n/g, "<br>")}
+                </div>
+
+            </div>
+
+
+            <div class="campo-info">
+
+                <strong>Observações</strong>
+
+                <div>
+                    ${escaparHTML(observacoes || "Sem observações.").replace(/\n/g, "<br>")}
+                </div>
+
+            </div>
+
+
+            <div class="modal-acoes">
+
+                <button
+                    type="button"
+                    class="botao botao-copiar"
+                    onclick="copiarEmail(${JSON.stringify(email)})"
+                >
+                    📋 Copiar email
+                </button>
+
+            </div>
+
+        `;
+
+
+        abrirModal(
+            "💰 Detalhes do Orçamento",
+            html
+        );
+
+    }
+
+
+    /* ==========================
+       COPIAR EMAIL
+    ========================== */
+
+    function copiarEmail(email) {
+
+        if (!navigator.clipboard) {
+
+            alert("Não foi possível copiar automaticamente.");
+
+            return;
+
+        }
+
+        navigator.clipboard.writeText(email)
+            .then(function() {
+
+                alert("Email copiado!");
+
+            })
+            .catch(function() {
+
+                alert("Não foi possível copiar o email.");
+
+            });
+
+    }
+
+
+    /* ==========================
+       APAGAR CONTACTO
+    ========================== */
+
+    function confirmarApagarContacto(id) {
+
+        const confirmado = confirm(
+            "Tem certeza que deseja apagar este contacto?"
+        );
+
+        if (!confirmado) {
+            return;
+        }
+
+        const form = document.createElement("form");
+
+        form.method = "POST";
+
+        form.action = "/admin/contacto/apagar/" + id;
+
+        document.body.appendChild(form);
+
+        form.submit();
+
+    }
+
+
+    /* ==========================
+       APAGAR PEDIDO
+    ========================== */
+
+    function confirmarApagarPedido(id) {
+
+        const confirmado = confirm(
+            "Tem certeza que deseja apagar este pedido?"
+        );
+
+        if (!confirmado) {
+            return;
+        }
+
+        const form = document.createElement("form");
+
+        form.method = "POST";
+
+        form.action = "/admin/pedido/apagar/" + id;
+
+        document.body.appendChild(form);
+
+        form.submit();
+
+    }
+
+
+    /* ==========================
+       APAGAR ORÇAMENTO
+    ========================== */
+
+    function confirmarApagarOrcamento(id) {
+
+        const confirmado = confirm(
+            "Tem certeza que deseja apagar este orçamento?"
+        );
+
+        if (!confirmado) {
+            return;
+        }
+
+        const form = document.createElement("form");
+
+        form.method = "POST";
+
+        form.action = "/admin/orcamento/apagar/" + id;
+
+        document.body.appendChild(form);
+
+        form.submit();
+
+    }
+
+</script>
+
+</body>
+</html>

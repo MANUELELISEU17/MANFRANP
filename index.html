@@ -1,0 +1,951 @@
+```html
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MANFRANP | Projetos & Tecnologia</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1f2937;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #111827, #1e3a8a);
+            color: white;
+        }
+
+        .hero-text {
+            max-width: 750px;
+        }
+
+        .pequeno {
+            letter-spacing: 4px;
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-size: 70px;
+            margin: 15px 0;
+            letter-spacing: 5px;
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .botao {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: white;
+            color: #1e3a8a;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .botao:hover {
+            transform: translateY(-2px);
+        }
+
+        .secao {
+            padding: 90px 8%;
+            text-align: center;
+        }
+
+        .secao h2,
+        .sobre h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .descricao {
+            margin-bottom: 50px;
+        }
+
+        .projetos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .icone {
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card button,
+        .contacto button {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .card button:hover,
+        .contacto button:hover {
+            background: #1d4ed8;
+        }
+
+        .sobre {
+            padding: 90px 15%;
+            background: white;
+        }
+
+        .sobre p {
+            max-width: 750px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .sobre ul {
+            margin: 20px 0 20px 25px;
+            line-height: 2;
+        }
+
+        .contacto {
+            background: #eef2ff;
+        }
+
+        .formulario {
+            max-width: 600px;
+            margin: 40px auto 0;
+            text-align: left;
+        }
+
+        .formulario label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .formulario input,
+        .formulario textarea,
+        .formulario select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        .formulario textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .formulario button {
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.65);
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+
+        .modal-conteudo {
+            background: white;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 35px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+        }
+
+        .modal-conteudo h2 {
+            margin-bottom: 10px;
+            color: #1e3a8a;
+        }
+
+        .modal-conteudo p {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .fechar {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .fechar:hover {
+            color: #dc2626;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #111827;
+            color: white;
+        }
+
+        footer h3 {
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 800px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+
+            .projetos {
+                grid-template-columns: 1fr;
+            }
+
+            .sobre {
+                padding: 70px 8%;
+            }
+
+            .modal-conteudo {
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            MANFRANP
+        </div>
+
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#projetos">Projetos</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-text">
+
+            <p class="pequeno">
+                BEM-VINDO À
+            </p>
+
+            <h1>
+                MANFRANP
+            </h1>
+
+            <h2>
+                Projetos & Tecnologia
+            </h2>
+
+            <p>
+                Criamos sistemas, aplicações e soluções
+                tecnológicas para transformar ideias
+                em projetos reais.
+            </p>
+
+            <a href="#projetos" class="botao">
+                Ver meus projetos
+            </a>
+
+        </div>
+    </section>
+
+    <section id="projetos" class="secao">
+
+        <h2>Meus Projetos</h2>
+
+        <p class="descricao">
+            Conheça alguns dos projetos desenvolvidos
+            pela MANFRANP.
+        </p>
+
+        <div class="projetos">
+
+            <div class="card">
+                <div class="icone">🏫</div>
+
+                <h3>Sistema Escolar</h3>
+
+                <p>
+                    Sistema para ajudar na gestão
+                    de informações de uma instituição escolar.
+                </p>
+
+                <button onclick="abrirProjeto('escolar')">
+                    Ver projeto
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="icone">💻</div>
+
+                <h3>Aplicações</h3>
+
+                <p>
+                    Desenvolvimento de aplicações
+                    para computador e outras plataformas.
+                </p>
+
+                <button onclick="abrirProjeto('aplicacoes')">
+                    Ver projeto
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="icone">🌐</div>
+
+                <h3>Websites</h3>
+
+                <p>
+                    Criação de páginas e sistemas web
+                    modernos e funcionais.
+                </p>
+
+                <button onclick="abrirProjeto('websites')">
+                    Ver projeto
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="servicos" class="secao">
+
+        <h2>Serviços</h2>
+
+        <p class="descricao">
+            Soluções tecnológicas desenvolvidas
+            pela MANFRANP.
+        </p>
+
+        <div class="projetos">
+
+            <div class="card">
+                <div class="icone">🌐</div>
+
+                <h3>Criação de Websites</h3>
+
+                <p>
+                    Criação de websites modernos,
+                    responsivos e funcionais.
+                </p>
+
+                <button onclick="abrirPedido('Website')">
+                    Solicitar projeto
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="icone">🏫</div>
+
+                <h3>Sistemas Escolares</h3>
+
+                <p>
+                    Desenvolvimento de sistemas
+                    para gestão de instituições.
+                </p>
+
+                <button onclick="abrirPedido('Sistema Escolar')">
+                    Solicitar projeto
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="icone">💻</div>
+
+                <h3>Aplicações</h3>
+
+                <p>
+                    Aplicações para computador
+                    e outras plataformas.
+                </p>
+
+                <button onclick="abrirPedido('Aplicação')">
+                    Solicitar projeto
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="icone">⚙️</div>
+
+                <h3>Automação</h3>
+
+                <p>
+                    Soluções para automatizar
+                    tarefas e processos.
+                </p>
+
+                <button onclick="abrirPedido('Automação')">
+                    Solicitar projeto
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="icone">🗄️</div>
+
+                <h3>Sistemas com Banco de Dados</h3>
+
+                <p>
+                    Sistemas capazes de armazenar
+                    e organizar informações.
+                </p>
+
+                <button onclick="abrirPedido('Banco de Dados')">
+                    Solicitar projeto
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="sobre" class="sobre">
+
+        <h2>Sobre a MANFRANP</h2>
+
+        <p>
+            A MANFRANP é uma marca dedicada ao desenvolvimento
+            de projetos e soluções tecnológicas.
+        </p>
+
+        <p>
+            O nome MANFRANP representa:
+        </p>
+
+        <ul>
+            <li><strong>MAN</strong> — Manuel</li>
+            <li><strong>FRAN</strong> — Francisco</li>
+            <li><strong>P</strong> — Projetos</li>
+        </ul>
+
+        <p>
+            A ideia é transformar conhecimento em projetos
+            reais através da programação e da tecnologia.
+        </p>
+
+    </section>
+
+    <section id="contacto" class="secao contacto">
+
+        <h2>Contacto</h2>
+
+        <p>
+            Tens uma ideia ou projeto?
+        </p>
+
+        <p>
+            Entre em contacto com a MANFRANP.
+        </p>
+
+        <form class="formulario" id="formContacto">
+
+            <label for="nome">
+                Nome
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Digite o seu nome"
+                required
+            >
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Digite o seu email"
+                required
+            >
+
+            <label for="mensagem">
+                Mensagem
+            </label>
+
+            <textarea
+                id="mensagem"
+                placeholder="Escreva a sua mensagem"
+                required
+            ></textarea>
+
+            <button type="submit">
+                Enviar mensagem
+            </button>
+
+        </form>
+
+    </section>
+
+    <div id="modalPedido" class="modal">
+
+        <div class="modal-conteudo">
+
+            <span
+                class="fechar"
+                onclick="fecharPedido()"
+            >
+                &times;
+            </span>
+
+            <h2>
+                Solicitar projeto
+            </h2>
+
+            <p>
+                Preencha os dados abaixo e explique
+                o que precisa para o seu projeto.
+            </p>
+
+            <form
+                class="formulario"
+                onsubmit="enviarPedido(event)"
+            >
+
+                <label for="clienteNome">
+                    Nome
+                </label>
+
+                <input
+                    type="text"
+                    id="clienteNome"
+                    placeholder="Nome do cliente"
+                    required
+                >
+
+                <label for="clienteEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="clienteEmail"
+                    placeholder="Email do cliente"
+                    required
+                >
+
+                <label for="tipoProjeto">
+                    Tipo de projeto
+                </label>
+
+                <select
+                    id="tipoProjeto"
+                    required
+                >
+                    <option value="">
+                        Escolha o serviço
+                    </option>
+
+                    <option value="Website">
+                        Website
+                    </option>
+
+                    <option value="Sistema Escolar">
+                        Sistema Escolar
+                    </option>
+
+                    <option value="Aplicação">
+                        Aplicação
+                    </option>
+
+                    <option value="Automação">
+                        Automação
+                    </option>
+
+                    <option value="Banco de Dados">
+                        Sistema com Banco de Dados
+                    </option>
+                </select>
+
+                <label for="descricaoProjeto">
+                    Explique o que precisa
+                </label>
+
+                <textarea
+                    id="descricaoProjeto"
+                    placeholder="Descreva o projeto..."
+                    required
+                ></textarea>
+
+                <button type="submit">
+                    Enviar pedido
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <footer>
+
+        <h3>
+            MANFRANP
+        </h3>
+
+        <p>
+            Projetos & Tecnologia
+        </p>
+
+        <p>
+            © 2026 MANFRANP.
+            Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+    <script>
+
+        function abrirProjeto(projeto) {
+
+            if (projeto === "escolar") {
+
+                alert(
+                    "Sistema Escolar MANFRANP\n\n" +
+                    "Este é um dos principais projetos " +
+                    "da MANFRANP."
+                );
+
+            } else if (projeto === "aplicacoes") {
+
+                alert(
+                    "Aplicações MANFRANP\n\n" +
+                    "Aqui serão apresentados os " +
+                    "programas desenvolvidos."
+                );
+
+            } else if (projeto === "websites") {
+
+                alert(
+                    "Websites MANFRANP\n\n" +
+                    "Aqui serão apresentados os " +
+                    "sites desenvolvidos."
+                );
+            }
+        }
+
+
+        function abrirPedido(servico) {
+
+            document.getElementById(
+                "modalPedido"
+            ).style.display = "block";
+
+            document.getElementById(
+                "tipoProjeto"
+            ).value = servico;
+        }
+
+
+        function fecharPedido() {
+
+            document.getElementById(
+                "modalPedido"
+            ).style.display = "none";
+        }
+
+
+        async function enviarPedido(event) {
+
+            event.preventDefault();
+
+            let nome =
+                document.getElementById(
+                    "clienteNome"
+                ).value;
+
+            let email =
+                document.getElementById(
+                    "clienteEmail"
+                ).value;
+
+            let projeto =
+                document.getElementById(
+                    "tipoProjeto"
+                ).value;
+
+            let descricao =
+                document.getElementById(
+                    "descricaoProjeto"
+                ).value;
+
+            try {
+
+                const resposta = await fetch(
+                    "/pedido",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            nome: nome,
+                            email: email,
+                            projeto: projeto,
+                            descricao: descricao
+                        })
+                    }
+                );
+
+                const resultado =
+                    await resposta.json();
+
+                if (resultado.sucesso) {
+
+                    alert(
+                        "PEDIDO ENVIADO!\n\n" +
+                        resultado.mensagem
+                    );
+
+                    document.getElementById(
+                        "clienteNome"
+                    ).value = "";
+
+                    document.getElementById(
+                        "clienteEmail"
+                    ).value = "";
+
+                    document.getElementById(
+                        "tipoProjeto"
+                    ).value = "";
+
+                    document.getElementById(
+                        "descricaoProjeto"
+                    ).value = "";
+
+                    fecharPedido();
+
+                } else {
+
+                    alert(resultado.mensagem);
+                }
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível enviar o pedido."
+                );
+            }
+        }
+
+
+        async function enviarFormulario(event) {
+
+            event.preventDefault();
+
+            let nome =
+                document.getElementById(
+                    "nome"
+                ).value;
+
+            let email =
+                document.getElementById(
+                    "email"
+                ).value;
+
+            let mensagem =
+                document.getElementById(
+                    "mensagem"
+                ).value;
+
+            try {
+
+                const resposta = await fetch(
+                    "/contacto",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            nome: nome,
+                            email: email,
+                            mensagem: mensagem
+                        })
+                    }
+                );
+
+                const resultado =
+                    await resposta.json();
+
+                if (resultado.sucesso) {
+
+                    alert(
+                        "Obrigado, " +
+                        nome +
+                        "!\n\n" +
+                        resultado.mensagem
+                    );
+
+                    document.getElementById(
+                        "nome"
+                    ).value = "";
+
+                    document.getElementById(
+                        "email"
+                    ).value = "";
+
+                    document.getElementById(
+                        "mensagem"
+                    ).value = "";
+
+                } else {
+
+                    alert(resultado.mensagem);
+                }
+
+            } catch (erro) {
+
+                console.error(erro);
+
+                alert(
+                    "Não foi possível enviar a mensagem."
+                );
+            }
+        }
+
+
+        document
+            .getElementById("formContacto")
+            .addEventListener(
+                "submit",
+                enviarFormulario
+            );
+
+
+        window.onclick = function(event) {
+
+            let modal =
+                document.getElementById(
+                    "modalPedido"
+                );
+
+            if (event.target === modal) {
+
+                fecharPedido();
+            }
+        };
+
+    </script>
+
+</body>
+</html>
+```

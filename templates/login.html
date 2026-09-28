@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>MANFRANP | Login</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f1115;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .login {
+            width: 90%;
+            max-width: 400px;
+            background: #171a21;
+            border: 1px solid #292d36;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .logo p {
+            color: #aeb4c0;
+            margin-top: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d1d5db;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 20px;
+            border: 1px solid #353a45;
+            border-radius: 8px;
+            background: #0f1115;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .erro {
+            background: #3b1515;
+            border: 1px solid #7f1d1d;
+            color: #fca5a5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #9ca3af;
+            text-decoration: none;
+        }
+
+        .voltar:hover {
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login">
+
+        <div class="logo">
+
+            <h1>MANFRANP</h1>
+
+            <p>Área Administrativa</p>
+
+        </div>
+
+
+        {% if erro %}
+
+        <div class="erro">
+            {{ erro }}
+        </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            <label for="utilizador">
+                Utilizador
+            </label>
+
+            <input
+                type="text"
+                id="utilizador"
+                name="utilizador"
+                placeholder="Digite o utilizador"
+                required
+            >
+
+
+            <label for="senha">
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Digite a senha"
+                required
+            >
+
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </form>
+
+
+        <a href="/" class="voltar">
+            ← Voltar para o site
+        </a>
+
+    </div>
+
+</body>
+</html>
+
+
